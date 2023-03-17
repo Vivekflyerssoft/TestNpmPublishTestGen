@@ -41,7 +41,7 @@ jobs:
         run: dotnet build --no-restore
 
       - name: Generate Typescript files
-        run: dotnet-typegen
+        run: dotnet-typegen generate
           
       - name: Run CI
         run: npm ci
