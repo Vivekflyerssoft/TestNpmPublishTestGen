@@ -46,7 +46,7 @@ jobs:
       - name: Run CI
         run: npm ci
       
-      # - name: NPM Publish
-      #   run: npm publish
+      - name: NPM Publish
+        run: npm publish
       #   env:
       #     NODE_AUTH_TOKEN: ${{secrets.npm_token}}
