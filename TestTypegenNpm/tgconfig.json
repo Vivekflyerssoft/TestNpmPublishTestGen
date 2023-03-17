@@ -1,0 +1,4 @@
+{
+    "generationSpecs": ["TestTypegenNpmSpec"],
+    "outputPath": "typescript-files"
+}

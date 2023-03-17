@@ -21,6 +21,10 @@ jobs:
   publish-npm:
     needs: build
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./TestTypegenNpm
+
     steps:
       - name: Checkout 
         uses: actions/checkout@v3
@@ -30,11 +34,31 @@ jobs:
         with:
           node-version: 16
           registry-url: https://registry.npmjs.org/
+
+      - name: Setup nuget
+        uses: nuget/setup-nuget@v1.0.5
+
+      - name: Setup dotnet
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 7.0.x
+
+      - name: Install TypeGen Globally
+        run: dotnet tool install --global dotnet-typegen --version 4.0.1
+      
+      - name: Restore dependencies
+        run: dotnet restore
+
+      - name: Build
+        run: dotnet build --no-restore
+
+      - name: Generate Typescript files
+        run: dotnet-typegen
           
       - name: Run CI
         run: npm ci
       
-      - name: NPM Publish
-        run: npm publish
-        env:
-          NODE_AUTH_TOKEN: ${{secrets.npm_token}}
+      # - name: NPM Publish
+      #   run: npm publish
+      #   env:
+      #     NODE_AUTH_TOKEN: ${{secrets.npm_token}}
